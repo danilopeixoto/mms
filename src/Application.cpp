@@ -28,11 +28,50 @@
 
 #include <mms/Application.h>
 
+#include <iostream>
+
 MMS_NAMESPACE_BEGIN
 
 Application::Application() {}
 Application::~Application() {}
 
+bool Application::inputBoolean(const std::string & status) const {
+    std::cout << "Input: " << status << std::endl;
+
+    bool value;
+    std::cin >> value;
+
+    return value;
+}
+float Application::inputFloat(const std::string & status) const {
+    std::cout << "Input: " << status << std::endl;
+
+    float value;
+    std::cin >> value;
+
+    return value;
+}
+void Application::output(const std::string & status) const {
+    delay(cycles);
+    std::cout << "Output: " << status << std::endl;
+}
+void Application::message(const std::string & status) const {
+    delay(cycles);
+    std::cout << "Message: " << status << std::endl;
+}
+
+void Application::delay(size_t cycles) const {
+    size_t i = 0;
+    while (i++ < cycles);
+}
+
+Application & Application::setCycles(size_t cycles) {
+    this->cycles = cycles;
+    return *this;
+}
+size_t Application::getCycles() const {
+    return cycles;
+}
 Application & Application::setRunning(bool running) {
     this->running = running;
     return *this;

@@ -28,9 +28,15 @@
 
 #include <mms/MMS.h>
 
+#include <clocale>
+
 MMS_NAMESPACE_USING
 
 int main(int argc, char ** argv) {
+    std::setlocale(LC_ALL, "Portuguese");
+
     MMS application;
+    application.setCycles(200000000);
+
     return application.run();
 }

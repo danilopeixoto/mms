@@ -37,7 +37,138 @@ MMS & MMS::initialize() {
     return *this;
 }
 MMS & MMS::execute() {
+    message("INÍCIO DA ORDENHAÇÃO (UMA VACA)");
+    milking();
+
+    message("INÍCIO DA REFRIGERAÇÃO DO LEITE");
+    refrigeration();
+
+    message("INÍCIO DA LIMPEZA DOS EQUIPAMENTOS");
+    cleanInPlace();
+
     return *this;
+}
+
+void MMS::milking() const {
+    output("Abrir portão.");
+    message("Aguardar entrada de uma vaca.");
+    output("Fechar portão.");
+
+    message("Verificando primeiros jatos de leite.");
+    message("A vaca apresenta doença?");
+
+    bool status = inputBoolean("0 - Não, 1 - Sim");
+
+    if (status) {
+        output("Abrir portão.");
+        message("Aguardar retirada da vaca.");
+        output("Fechar portão.");
+
+        milking();
+    }
+    else {
+        output("Ativar bomba de hipoclorito.");
+        message("Aguardando lavagem dos testos a base de solução de hipoclorito de sódio.");
+        output("Desativar bomba de hipoclorito.");
+
+        message("Aguardando secagem e colocação das teteiras nos tetos (MANUAL).");
+        output("Ativar teteiras de ordenha.");
+
+        message("Aguardando finalização da ordenhação pelo sensor de vácuo:");
+
+        while (!inputBoolean("0 - Ainda tem leite, 1 - Acabou o leite"))
+            message("Ordenhando...");
+
+        message("Ordenhação completa.");
+
+        output("Desativar teteiras de ordenha.");
+
+        output("Ativar bomba de iodo.");
+        message("Aguardando lavagem dos tetos a base de solução de iodo.");
+        output("Desativar bomba de iodo.");
+
+        output("Abrir portão.");
+        message("Aguardar retirada da vaca.");
+        output("Fechar portão.");
+    }
+}
+void MMS::refrigeration() const {
+    output("Ativar bombeamento de leite para resfriador.");
+    
+    message("Aguardando finalização do bombeamento pelo sensor de nível:");
+
+    while (!inputBoolean("0 - Enchendo, 1 - Cheio"))
+        message("Bombeando...");
+
+    message("Bombeamento completo.");
+
+    output("Desativar bombeamento de leite.");
+}
+void MMS::cleanInPlace() const {
+    milkingCIP();
+    refrigerationCIP();
+}
+void MMS::milkingCIP() const {
+    output("Ativar bombeamento de água morna nas tubulações da ordenha.");
+    message("Aguardando enxágue...");
+    output("Desativar bombeamento de água morna.");
+
+    output("Ativar bombeamento de detergente alcalino clorado nas tubulações da ordenha.");
+    message("Aguardando enxágue...");
+    output("Desativar bombeamento de detergente alcalino clorado.");
+
+    output("Ativar bombeamento de água morna.");
+    message("Aguardando finalização de enxágue pelo sensor de Ph:");
+
+    float ph;
+
+    while ((ph = inputFloat("Finalização de enxágue, 6 <= Ph <= 8")) < 6 || ph > 8)
+        message("Aguardando enxágue...");
+
+    message("Limpeza completa.");
+
+    output("Desativar bombeamento de água morna.");
+}
+void MMS::refrigerationCIP() const {
+    output("Ativar drenagem de leite do refrigerador.");
+
+    message("Aguardando finalização de drenagem pelo sensor de nível:");
+
+    while (!inputBoolean("0 - Cheio, 1 - Vázio"))
+        message("Drenando...");
+
+    message("Drenagem completa.");
+
+    output("Ativar bombeamento de hipoclorito de sódio no refrigerador.");
+
+    message("Aguardando finalização do bombeamento pelo sensor de nível:");
+
+    while (!inputBoolean("0 - Enchendo, 1 - Cheio"))
+        message("Bombeando...");
+
+    message("Bombeamento completo.");
+
+    output("Desativar bombeamento de hipoclorito de sódio no refrigerador.");
+    output("Ativar drenagem no refrigerador.");
+
+    message("Aguardando finalização de drenagem pelo sensor de nível:");
+
+    while (!inputBoolean("0 - Cheio, 1 - Vázio"))
+        message("Drenando...");
+
+    message("Drenagem completa.");
+
+    output("Ativar bombeamento de água morna.");
+    message("Aguardando finalização de enxágue pelo sensor de Ph:");
+
+    float ph;
+
+    while ((ph = inputFloat("Finalização de enxágue, 6 <= Ph <= 8")) < 6 || ph > 8)
+        message("Aguardando enxágue...");
+
+    message("Limpeza completa.");
+
+    output("Desativar bombeamento de água morna.");
 }
 
 MMS_NAMESPACE_END

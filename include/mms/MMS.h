@@ -41,6 +41,13 @@ public:
 
     virtual MMS & initialize() override;
     virtual MMS & execute() override;
+
+private:
+    void milking() const;
+    void refrigeration() const;
+    void cleanInPlace() const;
+    void milkingCIP() const;
+    void refrigerationCIP() const;
 };
 
 MMS_NAMESPACE_END

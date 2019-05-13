@@ -30,6 +30,7 @@
 #define MMS_APPLICATION_H
 
 #include <mms/Global.h>
+#include <string>
 
 MMS_NAMESPACE_BEGIN
 
@@ -41,12 +42,22 @@ public:
     virtual Application & initialize() = 0;
     virtual Application & execute() = 0;
 
+    bool inputBoolean(const std::string &) const;
+    float inputFloat(const std::string &) const;
+    void output(const std::string &) const;
+    void message(const std::string &) const;
+
+    void delay(size_t) const;
+
+    Application & setCycles(size_t);
+    size_t getCycles() const;
     Application & setRunning(bool);
     bool isRunning() const;
 
     int run();
 
 protected:
+    size_t cycles;
     bool running;
 };
 
