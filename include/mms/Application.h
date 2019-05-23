@@ -49,15 +49,15 @@ public:
 
     void delay(size_t) const;
 
-    Application & setCycles(size_t);
-    size_t getCycles() const;
+    Application & setDelay(size_t);
+    size_t getDelay() const;
     Application & setRunning(bool);
     bool isRunning() const;
 
     int run();
 
 protected:
-    size_t cycles;
+    size_t milliseconds;
     bool running;
 };
 

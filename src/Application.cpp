@@ -29,6 +29,7 @@
 #include <mms/Application.h>
 
 #include <iostream>
+#include <ctime>
 
 MMS_NAMESPACE_BEGIN
 
@@ -52,25 +53,27 @@ float Application::inputFloat(const std::string & status) const {
     return value;
 }
 void Application::output(const std::string & status) const {
-    delay(cycles);
+    delay(milliseconds);
     std::cout << "Output: " << status << std::endl;
 }
 void Application::message(const std::string & status) const {
-    delay(cycles);
+    delay(milliseconds);
     std::cout << "Message: " << status << std::endl;
 }
 
-void Application::delay(size_t cycles) const {
-    size_t i = 0;
-    while (i++ < cycles);
+void Application::delay(size_t milliseconds) const {
+    size_t clocks = std::clock() + milliseconds / 1000.0 * CLOCKS_PER_SEC;
+
+    while (std::clock() < clocks)
+        continue;
 }
 
-Application & Application::setCycles(size_t cycles) {
-    this->cycles = cycles;
+Application & Application::setDelay(size_t milliseconds) {
+    this->milliseconds = milliseconds;
     return *this;
 }
-size_t Application::getCycles() const {
-    return cycles;
+size_t Application::getDelay() const {
+    return milliseconds;
 }
 Application & Application::setRunning(bool running) {
     this->running = running;

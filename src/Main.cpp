@@ -36,7 +36,7 @@ int main(int argc, char ** argv) {
     std::setlocale(LC_ALL, "Portuguese");
 
     MMS application;
-    application.setCycles(200000000);
+    application.setDelay(1000);
 
     return application.run();
 }

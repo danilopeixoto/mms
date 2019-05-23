@@ -94,7 +94,7 @@ void MMS::milking() const {
 }
 void MMS::refrigeration() const {
     output("Ativar bombeamento de leite para resfriador.");
-    
+
     message("Aguardando finalização do bombeamento pelo sensor de nível:");
 
     while (!inputBoolean("0 - Enchendo, 1 - Cheio"))
